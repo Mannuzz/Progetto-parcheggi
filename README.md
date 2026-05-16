@@ -8,6 +8,8 @@ Sistema di gestione parcheggi intelligenti per la città di Brescia, sviluppato 
 
 - **React 18** — interfaccia utente
 - **Vite** — bundler e ambiente di sviluppo
+- **Node.js** — runtime JavaScript per il server locale
+- **npm** — gestore dei pacchetti
 - **Supabase** — database PostgreSQL, autenticazione e realtime
 - **React Router v6** — navigazione tra le pagine
 - **React Leaflet** — mappa interattiva con OpenStreetMap
@@ -82,7 +84,7 @@ src/
 
 Gestita interamente da **Supabase Auth**:
 
-- Registrazione con email e password (conferma email disabilitata per semplicità)
+- Registrazione con email e password (conferma email disabilitata)
 - Login con email e password hashata automaticamente con bcrypt
 - Il ruolo (admin / cittadino) è salvato nella tabella `profili_utenti`
 - Un **trigger PostgreSQL** (`on_auth_user_created`) crea automaticamente il profilo utente a ogni nuova registrazione
@@ -122,7 +124,7 @@ Gestita interamente da **Supabase Auth**:
 - Il costo viene calcolato con **arrotondamento per eccesso all'ora intera**
   - 10 minuti → fatturata 1 ora
   - 1 ora e 5 minuti → fatturate 2 ore
-- La scadenza automatica avviene esattamente all'orario di uscita previsto (non dopo 1 ora)
+- La scadenza automatica avviene esattamente all'orario di uscita previsto
 - I posti gratuiti non generano incassi
 - Gli incassi vengono registrati sia al checkout manuale sia alla scadenza automatica
 
@@ -138,31 +140,37 @@ Supabase Realtime è attivo sulle tabelle `prenotazioni`, `posti` e `incassi`:
 
 ---
 
-## Installazione locale
+## Installazione e avvio
 
 ```bash
-# Clona il repository
-git clone https://github.com/tuonome/smart-city-parking.git
+# Entra nella cartella del progetto
 cd smart-city-parking
 
 # Installa le dipendenze
 npm install
 
-# Crea il file .env nella root
+# Crea il file .env nella root del progetto
 VITE_SUPABASE_URL=https://tuoprogetto.supabase.co
 VITE_SUPABASE_ANON_KEY=la_tua_anon_key
 
-# Avvia il server di sviluppo
+# Avvia il server di sviluppo locale
 npm run dev
 ```
 
+Il progetto sarà disponibile su `http://localhost:5173`
+
 ---
 
-## Deploy
+## Variabili d'ambiente
 
-Il progetto è deployato su **Vercel** con collegamento automatico al repository GitHub. Ogni `git push` aggiorna automaticamente il sito online.
+Crea un file `.env` nella root del progetto con queste variabili, reperibili dal pannello Supabase in **Settings → API**:
 
-Le variabili d'ambiente `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` sono configurate nel pannello Vercel e non vengono mai esposte nel codice sorgente.
+```
+VITE_SUPABASE_URL=https://tuoprogetto.supabase.co
+VITE_SUPABASE_ANON_KEY=la_tua_chiave_anonima
+```
+
+Non condividere mai queste variabili pubblicamente.
 
 ---
 
@@ -170,7 +178,7 @@ Le variabili d'ambiente `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` sono conf
 
 | Ruolo | Email | Password |
 |---|---|---|
-| Admin | admin@parcheggibrescia.it | (impostata in Supabase) |
+| Admin | admin@parcheggibrescia.it | impostata in Supabase |
 | Utente | qualsiasi email registrata | password scelta in fase di registrazione |
 
 ---
