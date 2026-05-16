@@ -178,7 +178,7 @@ Non condividere mai queste variabili pubblicamente.
 
 | Ruolo | Email | Password |
 |---|---|---|
-| Admin | admin@parcheggibrescia.it | impostata in Supabase |
+| Admin | admin@smartcity.it | impostata in Supabase |
 | Utente | qualsiasi email registrata | password scelta in fase di registrazione |
 
 ---
